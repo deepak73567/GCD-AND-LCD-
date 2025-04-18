@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GCD and LCM Finder</title>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 2rem;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    input {
+      width: 60px;
+      margin-right: 5px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      font-weight: bold;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>GCD & LCM Finder (up to 5 numbers)</h1>
+
+  <div>
+    <label>Enter numbers:</label><br/>
+    <input type="number" id="num1" />
+    <input type="number" id="num2" />
+    <input type="number" id="num3" />
+    <input type="number" id="num4" />
+    <input type="number" id="num5" />
+    <br>
+    <button onclick="calculate()">Calculate GCD & LCM</button>
+  </div>
+
+  <div class="result" id="output"></div>
+
+  <script>
+    function gcd(a, b) {
+      while (b !== 0) {
+        let temp = b;
+        b = a % b;
+        a = temp;
+      }
+      return a;
+    }
+
+    function lcm(a, b) {
+      return (a * b) / gcd(a, b);
+    }
+
+    function calculate() {
+      let nums = [];
+      for (let i = 1; i <= 5; i++) {
+        let val = document.getElementById('num' + i).value;
+        if (val !== "") nums.push(parseInt(val));
+      }
+
+      if (nums.length === 0) {
+        document.getElementById("output").innerText = "Please enter at least one number.";
+        return;
+      }
+
+      let resultGCD = nums[0];
+      let resultLCM = nums[0];
+
+      for (let i = 1; i < nums.length; i++) {
+        resultGCD = gcd(resultGCD, nums[i]);
+        resultLCM = lcm(resultLCM, nums[i]);
+      }
+
+      document.getElementById("output").innerHTML = `
+        ➤ GCD (Greatest Common Divisor): <b>${resultGCD}</b><br/>
+        ➤ LCM (Least Common Multiple): <b>${resultLCM}</b>
+      `;
+    }
+  </script>
+
+</body>
+</html>
